@@ -3,12 +3,15 @@ pragma solidity ^0.4.23;
 import 'openzeppelin-solidity/contracts/token/ERC721/ERC721.sol';
 
 contract StarNotary is ERC721 {
-
+    
     struct Star {
         string name;
     }
 
 //  Add a name and a symbol for your starNotary tokens
+    string public constant name = "Meshal Star Notary";
+    string public constant symbol = "MSN";
+
 
 //
 
@@ -24,7 +27,9 @@ contract StarNotary is ERC721 {
     }
 
 // Add a function lookUptokenIdToStarInfo, that looks up the stars using the Token ID, and then returns the name of the star.
-
+    function lookUptokenIdToStarInfo(uint256 _tokenId) public {
+        tokenIdToStarInfo[_tokenId];
+    }
 //
 
     function putStarUpForSale(uint256 _tokenId, uint256 _price) public {
@@ -53,11 +58,34 @@ contract StarNotary is ERC721 {
 
 // Add a function called exchangeStars, so 2 users can exchange their star tokens...
 //Do not worry about the price, just write code to exchange stars between users.
+    function exchangeStars(uint256 _tokenId,uint256 _tokenId2) public {
+                address starOwner = ownerOf(_tokenId);
+                address starOwner2 = ownerOf(_tokenId2);
+            _removeTokenFrom(starOwner, _tokenId);
+               _addTokenTo(starOwner2, _tokenId);
+            
 
+            _removeTokenFrom(starOwner2, _tokenId2);
+               _addTokenTo(starOwner, _tokenId2);
+        
+ 
+      
+         
+    }
 //
 
 // Write a function to Transfer a Star. The function should transfer a star from the address of the caller.
 // The function should accept 2 arguments, the address to transfer the star to, and the token ID of the star.
 //
+    function starTransfer(address starNewOwner ,uint256 _tokenId2) public {
 
+        address starOwner = ownerOf(_tokenId2);
+
+        _removeTokenFrom(starOwner, _tokenId2);
+        _addTokenTo(starNewOwner, _tokenId2);
+
+  
+ 
+         
+    }
 }
